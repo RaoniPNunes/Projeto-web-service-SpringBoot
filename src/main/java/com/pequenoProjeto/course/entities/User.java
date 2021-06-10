@@ -2,9 +2,20 @@ package com.pequenoProjeto.course.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+
+
+@Entity //anotation pra informar que se trata de uma entidade do projeto
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
+	
+	@Id // especifica que o atributo Id é uma chave primária no BD ojeto relacional
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //cria um id automaticamente no BD
 	private Long id;
 	private String name;
 	private String email;
