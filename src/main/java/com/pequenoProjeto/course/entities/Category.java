@@ -1,54 +1,41 @@
 package com.pequenoProjeto.course.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
-
-@Entity //anotation pra informar que se trata de uma entidade do projeto
-@Table(name = "tb_user")//-> nomeando no DB como tb_user
-public class User implements Serializable{
+@Entity
+@Table(name = "tb_category")
+public class Category implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id // especifica que o atributo Id é uma chave primária no BD ojeto relacional
-	@GeneratedValue(strategy = GenerationType.IDENTITY) //cria um id automaticamente no BD
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	private String email;
-	private String phone;
-	private String password;
 	
-	@OneToMany(mappedBy = "client")// -> order definido como chave estrangeira na relação 1 pra muitos
 	@JsonIgnore
-	private List<Order> orders = new ArrayList<>();
+	@ManyToMany(mappedBy = "categories")
+	private Set<Product> products = new HashSet<>();
 	
-	public List<Order> getOrders() {
-		return orders;
-	}
-
-	
-	public User() {
+	public Category() {
 		
 	}
 
-	public User(Long id, String name, String email, String phone, String password) {
+	public Category(Long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.email = email;
-		this.phone = phone;
-		this.password = password;
 	}
 
 	public Long getId() {
@@ -66,29 +53,9 @@ public class User implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
+	
+	public Set<Product> getProducts() {
+		return products;
 	}
 
 	@Override
@@ -107,7 +74,7 @@ public class User implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		Category other = (Category) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -115,7 +82,8 @@ public class User implements Serializable{
 			return false;
 		return true;
 	}
-	
+
+		
 	
 
 }
