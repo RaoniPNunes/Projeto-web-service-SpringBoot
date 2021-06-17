@@ -25,5 +25,26 @@ public class UserService {
 		Optional<User> obj = repository.findById(id);
 		return obj.get();
 	}
+	
+	public User insert(User obj) {// -> chamada do método do repository para inserir novo user
+		return repository.save(obj);
+	}
+	
+	public void delete(Long id) {// -> chamada do método do repository para deletar um user
+		repository.deleteById(id);
+	}
+	
+	public User update(Long id, User obj) {
+		User entity = repository.getOne(id); //->método do JPA que instancia um objeto sem passar para o banco de dados
+		updateData(entity, obj);
+		return repository.save(entity);
+	}
+
+	private void updateData(User entity, User obj) {
+		entity.setName(obj.getName());
+		entity.setEmail(obj.getEmail());
+		entity.setPhone(obj.getPhone());
+		
+	}
 
 }

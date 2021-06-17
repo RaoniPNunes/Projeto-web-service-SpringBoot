@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.pequenoProjeto.course.entities.Category;
 import com.pequenoProjeto.course.entities.Order;
 import com.pequenoProjeto.course.entities.OrderItem;
+import com.pequenoProjeto.course.entities.Payment;
 import com.pequenoProjeto.course.entities.Product;
 import com.pequenoProjeto.course.entities.User;
 import com.pequenoProjeto.course.entities.enums.OrderStatus;
@@ -85,6 +86,10 @@ public class TestConfig implements CommandLineRunner{
 		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+		
+		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+		o1.setPayment(pay1);
+		orderRepository.save(o1); //no caso de relação 1 pra 1 a classe dependente pode ser salva através do repository da classe que depende.
 		
 	}
 
